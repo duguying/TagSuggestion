@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="sass/lib.css"/>
+    <link rel="stylesheet" href="sass/style.css"/>
+
+    <script src="ts/suggestion.js"></script>
+</head>
+<body>
+<input type="text" id="tag" />
+
+</body>
+<script>
+    var ele = document.getElementById("tag");
+    var tag_sug = new TagSuggestion(ele);
+
+    var new_data = {
+        "编程语言":["php","golang","typescript"],
+        "Web应用开发":["ssh","cakephp"],
+        "移动开发":["iWatch","WP8"],
+        "开发工具":["Visual Studio","Notepad++"],
+        "数据库":["MariaDB","Oracle","Redis"],
+        "开发插件":["Emmet","MyEclipse"]
+    };
+
+//    tag_sug.updateData(new_data);
+</script>
+</html>

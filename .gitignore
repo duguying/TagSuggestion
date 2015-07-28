@@ -1,0 +1,8 @@
+# webstorm
+/.idea/
+
+# js
+*.js
+
+# map
+*.map
