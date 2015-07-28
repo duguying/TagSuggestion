@@ -12,6 +12,7 @@ class TagSuggestion{
         console.log(this.data);
 
         this.activeTab("编程语言");
+        this.bindInputFocus();
     }
 
     private box_div:any;
@@ -26,8 +27,8 @@ class TagSuggestion{
         "数据库":["MySQL","SQL Server","MongoDB"]
     };
     private map:any = {};
-
     private bind_element:any;
+    private close_mark:boolean = false;
 
     /**
      * 添加类
@@ -214,6 +215,40 @@ class TagSuggestion{
         //console.log("after update");
         //console.log(this.data);
         //console.log(this.map);
+    }
+
+    private hideSugDiv(){
+        this.box_div.style.display = "none";
+    }
+
+    private showSugDiv(){
+        this.box_div.style.display = "";
+    }
+
+    private bindInputFocus(){
+        var old_event_focus = this.bind_element.onfocus;
+        //var old_body_event_click = document.body.onclick;
+        //old_body_event_click();
+        var _this = this;
+        this.bind_element.onfocus = function (e) {
+            _this.showSugDiv();
+            console.log("focus");
+            if(old_event_focus){
+                old_event_focus();
+            }
+        }
+
+        document.body.onclick = function (e) {
+            var target = e.target;
+            if((target==_this.bind_element) || (target==_this.box_div)){
+                //console.log("trigger")
+            }else{
+                _this.hideSugDiv();
+            }
+            //if(old_body_event_click){
+            //    old_body_event_click();
+            //}
+        }
     }
 }
 
