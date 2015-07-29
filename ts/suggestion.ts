@@ -86,6 +86,16 @@ class TagSuggestion{
         return s;
     }
 
+    /**
+     * 删除子节点
+     * @param div
+     */
+    private removeAllChild(ele:any){
+        while(ele.hasChildNodes()){
+            ele.removeChild(ele.firstChild);
+        }
+    }
+
     private createBoxDiv(){
         this.box_div = document.createElement("div");
         this.addClass(this.box_div, "sug-box");
@@ -170,10 +180,11 @@ class TagSuggestion{
             }
         }
 
-        this.group_item_li.innerHTML = "";
+        this.removeAllChild(this.group_item_li);
         var group = this.data[key];
         for(var idx in group){
             this.group_item_li.appendChild(this.map[key+idx]);
+            console.log(this.map[key+idx].innerHTML);
         }
     }
 
@@ -206,7 +217,7 @@ class TagSuggestion{
     public updateData(data:any){
         this.data = data;
         this.map = {};
-        this.parent_group_li.innerHTML = "";
+        this.removeAllChild(this.parent_group_li);
         this.drawSpan();
         var active_tab = this.getActiveTabName();
         this.activeTab(active_tab);
