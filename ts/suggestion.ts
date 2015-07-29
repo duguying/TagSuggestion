@@ -3,8 +3,8 @@
  */
 
 class TagSuggestion{
-    constructor(ele:any){
-        this.bind_element = ele;
+    constructor(){
+
         this.drawFrame();
         this.drawSpan();
 
@@ -12,7 +12,7 @@ class TagSuggestion{
         console.log(this.data);
 
         this.activeTab("编程语言");
-        this.bindInputFocus();
+
 
         //this.getBindElementStyle();
     }
@@ -96,6 +96,15 @@ class TagSuggestion{
         while(ele.hasChildNodes()){
             ele.removeChild(ele.firstChild);
         }
+    }
+
+    /**
+     * 更新绑定元素
+     * @param ele
+     */
+    public updateBindElement(ele:any){
+        this.bind_element = ele;
+        this.bindInputFocus();
     }
 
     private createBoxDiv(){
@@ -241,6 +250,9 @@ class TagSuggestion{
 
     private bindInputFocus(){
         var _this = this;
+        if(!this.bind_element){
+            throw new Error("请先绑定input输入框");
+        }
         this.bind_element.addEventListener("focus", function (e) {
             _this.showSugDiv();
         });

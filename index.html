@@ -10,8 +10,9 @@
 </head>
 <body style="width: 2000px;height: 2000px;">
 <input type="text" id="tag" />
+<input type="text" />
 <style>
-    input{
+    input#tag{
         left: 1000px;
         top: 360px;
         display: block;
@@ -21,7 +22,8 @@
 </body>
 <script>
     var ele = document.getElementById("tag");
-    var tag_sug = new TagSuggestion(ele);
+    var tag_sug = new TagSuggestion();
+    tag_sug.updateBindElement(ele);
 
     var new_data = {
         "编程语言":["php","golang","typescript"],
