@@ -13,6 +13,8 @@ class TagSuggestion{
 
         this.activeTab("编程语言");
         this.bindInputFocus();
+
+        //this.getBindElementStyle();
     }
 
     private box_div:any;
@@ -20,11 +22,11 @@ class TagSuggestion{
     private parent_group_li:any;
     private group_item_li:any;
     private data:any = {
-        "编程语言":["C","C++"],
-        "Web应用开发":["beego","thinkphp"],
-        "移动开发":["Android","IOS"],
-        "开发工具":["eclipse","IDEA","Sublime Text"],
-        "数据库":["MySQL","SQL Server","MongoDB"]
+        //"编程语言":["C","C++"],
+        //"Web应用开发":["beego","thinkphp"],
+        //"移动开发":["Android","IOS"],
+        //"开发工具":["eclipse","IDEA","Sublime Text"],
+        //"数据库":["MySQL","SQL Server","MongoDB"]
     };
     private map:any = {};
     private bind_element:any;
@@ -184,7 +186,6 @@ class TagSuggestion{
         var group = this.data[key];
         for(var idx in group){
             this.group_item_li.appendChild(this.map[key+idx]);
-            console.log(this.map[key+idx].innerHTML);
         }
     }
 
@@ -228,6 +229,13 @@ class TagSuggestion{
     }
 
     private showSugDiv(){
+        var left = this.bind_element.offsetLeft;
+        var top = this.bind_element.offsetTop;
+        var height = this.bind_element.offsetHeight;
+        var box_top = top + height;
+        this.box_div.style.position = "fixed";
+        this.box_div.style.left = left+"px";
+        this.box_div.style.top = box_top+"px";
         this.box_div.style.display = "";
     }
 
@@ -235,7 +243,6 @@ class TagSuggestion{
         var _this = this;
         this.bind_element.addEventListener("focus", function (e) {
             _this.showSugDiv();
-            console.log("focus");
         });
 
         document.body.addEventListener("click", function (e) {
@@ -247,5 +254,6 @@ class TagSuggestion{
             }
         })
     }
+
 }
 
