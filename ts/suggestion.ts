@@ -91,6 +91,7 @@ class TagSuggestion{
         this.addClass(this.box_div, "sug-box");
         this.ul = document.createElement("ul");
         this.box_div.appendChild(this.ul);
+        this.box_div.style.display = "none";
     }
 
     private createParentGroupLi(){
@@ -98,16 +99,14 @@ class TagSuggestion{
         this.addClass(this.parent_group_li, "tab");
         var _this = this;
         // 从li事件委托到span
-        this.parent_group_li.onmouseover = function (e) {
+        this.parent_group_li.addEventListener("mouseover", function (e) {
             var e = e || window.event;
             var target = e.target || e.srcElement;
             if(target.nodeName.toLowerCase() == "span"){
                 var key = target.innerHTML;
                 _this.activeTab(key);
-                //console.log(_this.getActiveTabName());
             }
-        };
-        //console.log(this.parent_group_li);
+        });
     }
 
     private createGroupItemLi(){
@@ -115,7 +114,7 @@ class TagSuggestion{
         this.addClass(this.group_item_li, "tab-sub");
         var _this = this;
         // 从li事件委托到span
-        this.group_item_li.onclick = function (e) {
+        this.group_item_li.addEventListener("click", function (e) {
             var e = e || window.event;
             var target = e.target || e.srcElement;
             if(target.nodeName.toLowerCase() == "span"){
@@ -123,7 +122,7 @@ class TagSuggestion{
                 console.log(key);
                 _this.fillIntoInput(key);
             }
-        }
+        });
     }
 
     private createItemSpan(className:string, name:string){
@@ -211,10 +210,6 @@ class TagSuggestion{
         this.drawSpan();
         var active_tab = this.getActiveTabName();
         this.activeTab(active_tab);
-        //
-        //console.log("after update");
-        //console.log(this.data);
-        //console.log(this.map);
     }
 
     private hideSugDiv(){
@@ -226,29 +221,20 @@ class TagSuggestion{
     }
 
     private bindInputFocus(){
-        var old_event_focus = this.bind_element.onfocus;
-        //var old_body_event_click = document.body.onclick;
-        //old_body_event_click();
         var _this = this;
-        this.bind_element.onfocus = function (e) {
+        this.bind_element.addEventListener("focus", function (e) {
             _this.showSugDiv();
             console.log("focus");
-            if(old_event_focus){
-                old_event_focus();
-            }
-        }
+        });
 
-        document.body.onclick = function (e) {
+        document.body.addEventListener("click", function (e) {
             var target = e.target;
             if((target==_this.bind_element) || (target==_this.box_div)){
                 //console.log("trigger")
             }else{
                 _this.hideSugDiv();
             }
-            //if(old_body_event_click){
-            //    old_body_event_click();
-            //}
-        }
+        })
     }
 }
 
