@@ -11,7 +11,7 @@ class TagSuggestion{
         console.log(this.map);
         console.log(this.data);
 
-        this.activeTab("编程语言");
+        //this.activeTab(this.getFirstTabName());
 
 
         //this.getBindElementStyle();
@@ -178,6 +178,8 @@ class TagSuggestion{
                 this.map[parent+idx] = ele;
             }
         };
+
+        this.activeTab(this.getFirstTabName());
     }
 
     /**
@@ -215,6 +217,16 @@ class TagSuggestion{
             };
         };
         return first_ele_name;
+    }
+
+    /**
+     * 获取data中第一个key
+     * @returns {string}
+     */
+    private getFirstTabName(){
+        for(var eleName in this.data){
+            return eleName;
+        }
     }
 
     private fillIntoInput(content:string){
