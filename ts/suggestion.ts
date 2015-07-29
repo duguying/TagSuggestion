@@ -251,11 +251,9 @@ class TagSuggestion{
 
     private bindInputFocus(){
         var _this = this;
-        //if(!this.bind_element){
-        //    throw new Error("请先绑定input输入框");
-        //}
-
-        //debugger;
+        if(this.bind_elements.length <= 0){
+            throw new Error("请先绑定input输入框");
+        }
 
         for(var idx in this.bind_elements){
             this.bind_elements[idx].addEventListener("focus", function (e) {
