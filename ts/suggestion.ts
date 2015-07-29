@@ -29,7 +29,8 @@ class TagSuggestion{
         //"数据库":["MySQL","SQL Server","MongoDB"]
     };
     private map:any = {};
-    private bind_element:any;
+    private current_bind_element:any;
+    private bind_elements:any = [];
     private close_mark:boolean = false;
 
     /**
@@ -102,8 +103,8 @@ class TagSuggestion{
      * 更新绑定元素
      * @param ele
      */
-    public updateBindElement(ele:any){
-        this.bind_element = ele;
+    public addBindingElement(ele:any){
+        this.bind_elements.push(ele);
         this.bindInputFocus();
     }
 
@@ -217,7 +218,7 @@ class TagSuggestion{
     }
 
     private fillIntoInput(content:string){
-        this.bind_element.value = content;
+        this.current_bind_element.value = content;
     }
 
     /**
@@ -238,9 +239,9 @@ class TagSuggestion{
     }
 
     private showSugDiv(){
-        var left = this.bind_element.offsetLeft;
-        var top = this.bind_element.offsetTop;
-        var height = this.bind_element.offsetHeight;
+        var left = this.current_bind_element.offsetLeft;
+        var top = this.current_bind_element.offsetTop;
+        var height = this.current_bind_element.offsetHeight;
         var box_top = top + height;
         this.box_div.style.position = "fixed";
         this.box_div.style.left = left+"px";
@@ -250,16 +251,23 @@ class TagSuggestion{
 
     private bindInputFocus(){
         var _this = this;
-        if(!this.bind_element){
-            throw new Error("请先绑定input输入框");
+        //if(!this.bind_element){
+        //    throw new Error("请先绑定input输入框");
+        //}
+
+        //debugger;
+
+        for(var idx in this.bind_elements){
+            this.bind_elements[idx].addEventListener("focus", function (e) {
+                _this.current_bind_element = this;
+                _this.showSugDiv();
+            });
         }
-        this.bind_element.addEventListener("focus", function (e) {
-            _this.showSugDiv();
-        });
+
 
         document.body.addEventListener("click", function (e) {
             var target = e.target;
-            if((target==_this.bind_element) || (target==_this.box_div)){
+            if((target==_this.current_bind_element) || (target==_this.box_div)){
                 //console.log("trigger")
             }else{
                 _this.hideSugDiv();

@@ -13,17 +13,19 @@
 <input type="text" />
 <style>
     input#tag{
-        left: 1000px;
-        top: 360px;
+        left: 300px;
+        top: 200px;
         display: block;
         position: absolute;
     }
 </style>
 </body>
 <script>
-    var ele = document.getElementById("tag");
+    var ele1 = document.getElementsByTagName("input")[0];
+    var ele2 = document.getElementsByTagName("input")[1];
     var tag_sug = new TagSuggestion();
-    tag_sug.updateBindElement(ele);
+    tag_sug.addBindingElement(ele1);
+    tag_sug.addBindingElement(ele2);
 
     var new_data = {
         "编程语言":["php","golang","typescript"],
