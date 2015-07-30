@@ -8,8 +8,8 @@ class TagSuggestion{
         this.drawFrame();
         this.drawSpan();
 
-        console.log(this.map);
-        console.log(this.data);
+        //console.log(this.map);
+        //console.log(this.data);
 
         //this.activeTab(this.getFirstTabName());
 
@@ -31,7 +31,7 @@ class TagSuggestion{
     private map:any = {};
     private current_bind_element:any;
     private bind_elements:any = [];
-    private close_mark:boolean = false;
+    private callback_fater_input:any = null;
 
     /**
      * 添加类
@@ -101,10 +101,11 @@ class TagSuggestion{
 
     /**
      * 更新绑定元素
-     * @param ele
+     * @param ele 绑定的input元素
+     * @param callback 填充完毕后的回调函数
      */
-    public addBindingElement(ele:any){
-        this.bind_elements.push(ele);
+    public addBindingElement(ele:any, callback:any){
+        this.bind_elements.push({"element":ele,"callback":callback});
         this.bindInputFocus();
     }
 
@@ -141,7 +142,7 @@ class TagSuggestion{
             var target = e.target || e.srcElement;
             if(target.nodeName.toLowerCase() == "span"){
                 var key = target.innerHTML;
-                console.log(key);
+                //console.log(key);
                 _this.fillIntoInput(key);
             }
         });
@@ -231,7 +232,22 @@ class TagSuggestion{
 
     private fillIntoInput(content:string){
         this.current_bind_element.value = content;
+        for(var idx in this.bind_elements){
+            if(this.bind_elements[idx]["element"] == this.current_bind_element){
+                if(this.bind_elements[idx]["callback"]){
+                    this.bind_elements[idx]["callback"]();
+                }
+            };
+        }
     }
+
+    /**
+     * 添加填充后的回调
+     * @param callback
+     */
+    //public addCallbackAfterFill(callback:any){
+    //    this.callback_fater_input = callback;
+    //}
 
     /**
      * 更新数据源
@@ -268,7 +284,7 @@ class TagSuggestion{
         }
 
         for(var idx in this.bind_elements){
-            this.bind_elements[idx].addEventListener("focus", function (e) {
+            this.bind_elements[idx]["element"].addEventListener("focus", function (e) {
                 _this.current_bind_element = this;
                 _this.showSugDiv();
             });
