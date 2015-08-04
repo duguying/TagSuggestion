@@ -5,8 +5,6 @@
     <title></title>
     <link rel="stylesheet" href="sass/lib.css"/>
     <link rel="stylesheet" href="sass/style.css"/>
-
-    <script src="ts/suggestion.js"></script>
 </head>
 <body style="width: 2000px;height: 2000px;">
 <input type="text" id="tag" />
@@ -20,14 +18,14 @@
     }
 </style>
 </body>
+<script src="ts/suggestion.js"></script>
 <script>
     var ele1 = document.getElementsByTagName("input")[0];
     var ele2 = document.getElementsByTagName("input")[1];
-    var tag_sug = new TagSuggestion();
-    tag_sug.addBindingElement(ele1,function (e) {
+    TagSuggestion.ME.addBindingElement(ele1,function (e) {
         console.log("hello ele1");
     });
-    tag_sug.addBindingElement(ele2);
+    TagSuggestion.ME.addBindingElement(ele2);
 
     var new_data = {
         "编程语言":["php","golang","typescript"],
@@ -38,6 +36,6 @@
         "开发插件":["Emmet","MyEclipse"]
     };
 
-    tag_sug.updateData(new_data);
+    TagSuggestion.ME.updateData(new_data);
 </script>
 </html>

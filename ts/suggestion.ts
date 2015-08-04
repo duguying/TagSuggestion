@@ -4,30 +4,15 @@
 
 class TagSuggestion{
     constructor(){
-
         this.drawFrame();
         this.drawSpan();
-
-        //console.log(this.map);
-        //console.log(this.data);
-
-        //this.activeTab(this.getFirstTabName());
-
-
-        //this.getBindElementStyle();
     }
 
     private box_div:any;
     private ul:any;
     private parent_group_li:any;
     private group_item_li:any;
-    private data:any = {
-        //"编程语言":["C","C++"],
-        //"Web应用开发":["beego","thinkphp"],
-        //"移动开发":["Android","IOS"],
-        //"开发工具":["eclipse","IDEA","Sublime Text"],
-        //"数据库":["MySQL","SQL Server","MongoDB"]
-    };
+    private data:any = {};
     private map:any = {};
     private current_bind_element:any;
     private bind_elements:any = [];
