@@ -31,7 +31,7 @@ class TagSuggestion{
     private map:any = {};
     private current_bind_element:any;
     private bind_elements:any = [];
-    private callback_fater_input:any = null;
+    public static ME:TagSuggestion = new TagSuggestion();
 
     /**
      * 添加类
@@ -230,6 +230,23 @@ class TagSuggestion{
         }
     }
 
+    /**
+     * 获取第一个非空key
+     * @returns {string}
+     */
+    private getFirstNotNullTabName(){
+        for(var eleName in this.data){
+            if(!this.data[eleName]){
+                return eleName;
+            }else{
+                if(this.data[eleName].length == 0){
+                    return this.data[eleName];
+                };
+            }
+        }
+        return this.getFirstTabName();
+    }
+
     private fillIntoInput(content:string){
         this.current_bind_element.value = content;
         for(var idx in this.bind_elements){
@@ -240,14 +257,6 @@ class TagSuggestion{
             };
         }
     }
-
-    /**
-     * 添加填充后的回调
-     * @param callback
-     */
-    //public addCallbackAfterFill(callback:any){
-    //    this.callback_fater_input = callback;
-    //}
 
     /**
      * 更新数据源

@@ -6,7 +6,6 @@ var TagSuggestion = (function () {
         this.data = {};
         this.map = {};
         this.bind_elements = [];
-        this.callback_fater_input = null;
         this.drawFrame();
         this.drawSpan();
         //console.log(this.map);
@@ -196,6 +195,24 @@ var TagSuggestion = (function () {
             return eleName;
         }
     };
+    /**
+     * 获取第一个非空key
+     * @returns {string}
+     */
+    TagSuggestion.prototype.getFirstNotNullTabName = function () {
+        for (var eleName in this.data) {
+            if (!this.data[eleName]) {
+                return eleName;
+            }
+            else {
+                if (this.data[eleName].length == 0) {
+                    return this.data[eleName];
+                }
+                ;
+            }
+        }
+        return this.getFirstTabName();
+    };
     TagSuggestion.prototype.fillIntoInput = function (content) {
         this.current_bind_element.value = content;
         for (var idx in this.bind_elements) {
@@ -207,13 +224,6 @@ var TagSuggestion = (function () {
             ;
         }
     };
-    /**
-     * 添加填充后的回调
-     * @param callback
-     */
-    //public addCallbackAfterFill(callback:any){
-    //    this.callback_fater_input = callback;
-    //}
     /**
      * 更新数据源
      * @param data
@@ -259,6 +269,8 @@ var TagSuggestion = (function () {
             }
         });
     };
+    TagSuggestion.ME = new TagSuggestion();
     return TagSuggestion;
 })();
+//window.TagSuggestion = TagSuggestion;
 //# sourceMappingURL=suggestion.js.map
