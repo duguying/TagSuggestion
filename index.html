@@ -8,7 +8,10 @@
 </head>
 <body style="width: 2000px;height: 2000px;">
 <input type="text" id="tag" />
-<input type="text" />
+<div style="width: 800px; height: 500px;background-color: #0088cc; opacity: .3; left: 500px; top: 100px; position:absolute;">
+    <input type="text" />
+</div>
+
 <style>
     input#tag{
         left: 300px;
@@ -28,7 +31,7 @@
     TagSuggestion.ME.addBindingElement(ele2);
 
     var new_data = {
-        "编程语言":["php","golang","typescript"],
+        "编程语言":[],
         "Web应用开发":["ssh","cakephp"],
         "移动开发":["iWatch","WP8"],
         "开发工具":["Visual Studio","Notepad++"],

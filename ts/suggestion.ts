@@ -156,11 +156,15 @@ class TagSuggestion{
     private drawSpan(){
         for(var parent in this.data){
             var parent_ele = this.createItemSpan("sug-parent",parent);
+            parent_ele.style.overflow = "hidden";
+            parent_ele.setAttribute("title",parent);
             this.map[parent] = parent_ele;
             this.parent_group_li.appendChild(parent_ele);
             for(var idx in this.data[parent]){
                 var item = this.data[parent][idx];
                 var ele = this.createItemSpan("sug-item",item);
+                ele.style.overflow = "hidden";
+                ele.setAttribute("title",item);
                 this.map[parent+idx] = ele;
             }
         };
@@ -221,11 +225,9 @@ class TagSuggestion{
      */
     private getFirstNotNullTabName(){
         for(var eleName in this.data){
-            if(!this.data[eleName]){
-                return eleName;
-            }else{
-                if(this.data[eleName].length == 0){
-                    return this.data[eleName];
+            if(this.data[eleName]){
+                if(this.data[eleName].length != 0){
+                    return eleName;
                 };
             }
         }
@@ -253,6 +255,9 @@ class TagSuggestion{
         this.removeAllChild(this.parent_group_li);
         this.drawSpan();
         var active_tab = this.getActiveTabName();
+        if(data[active_tab].length<=0){
+            active_tab = this.getFirstNotNullTabName();
+        }
         this.activeTab(active_tab);
     }
 
@@ -260,9 +265,28 @@ class TagSuggestion{
         this.box_div.style.display = "none";
     }
 
+    private getElementLeft(element){
+        var actualLeft = element.offsetLeft;
+        var current = element.offsetParent;
+        while (current !== null){
+            actualLeft += current.offsetLeft;
+            current = current.offsetParent;
+        }
+        return actualLeft;
+    }
+    private getElementTop(element){
+        var actualTop = element.offsetTop;
+        var current = element.offsetParent;
+        while (current !== null){
+            actualTop += current.offsetTop;
+            current = current.offsetParent;
+        }
+        return actualTop;
+    }
+
     private showSugDiv(){
-        var left = this.current_bind_element.offsetLeft;
-        var top = this.current_bind_element.offsetTop;
+        var left = this.getElementLeft(this.current_bind_element);
+        var top = this.getElementTop(this.current_bind_element);
         var height = this.current_bind_element.offsetHeight;
         var box_top = top + height;
         this.box_div.style.position = "absolute";
