@@ -89,9 +89,24 @@ class TagSuggestion{
      * @param ele 绑定的input元素
      * @param callback 填充完毕后的回调函数
      */
-    public addBindingElement(ele:any, callback:any){
+    public addBindingElement(ele:any, callback: any){
         this.bind_elements.push({"element":ele,"callback":callback});
-        this.bindInputFocus();
+        this.bindInputFocus(ele);
+    }
+
+    /**
+     * 移除绑定
+     * @param ele
+     */
+    public removeBindingElement(ele:any){
+        var idx;
+        for (idx in this.bind_elements){
+            if(this.bind_elements[idx]["element"] == ele){
+                this.bind_elements[idx]["callback"] = null;
+                ele.removeEventListener("focus",this.bind_elements[idx]["focus"]);
+                delete this.bind_elements[idx];
+            };
+        }
     }
 
     private createBoxDiv(){
@@ -295,19 +310,21 @@ class TagSuggestion{
         this.box_div.style.display = "";
     }
 
-    private bindInputFocus(){
+    private bindInputFocus(ele:any){
         var _this = this;
         if(this.bind_elements.length <= 0){
             throw new Error("请先绑定input输入框");
         }
 
         for(var idx in this.bind_elements){
-            this.bind_elements[idx]["element"].addEventListener("focus", function (e) {
-                _this.current_bind_element = this;
-                _this.showSugDiv();
-            });
+            if(this.bind_elements[idx]["element"] == ele){
+                this.bind_elements[idx]["focus"] = function (e) {
+                    _this.current_bind_element = e.target;
+                    _this.showSugDiv();
+                }
+                this.bind_elements[idx]["element"].addEventListener("focus", this.bind_elements[idx]["focus"]);
+            }
         }
-
 
         document.body.addEventListener("click", function (e) {
             var target = e.target;
@@ -316,7 +333,7 @@ class TagSuggestion{
             }else{
                 _this.hideSugDiv();
             }
-        })
+        });
     }
 
 }
