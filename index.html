@@ -27,9 +27,10 @@
     var ele2 = document.getElementsByTagName("input")[1];
     TagSuggestion.ME.addBindingElement(ele1,function (e) {
         console.log("hello ele1");
+        return false;
     });
     TagSuggestion.ME.addBindingElement(ele2);
-    TagSuggestion.ME.removeBindingElement(ele1);
+//    TagSuggestion.ME.removeBindingElement(ele1);
 
     var new_data = {
         "编程语言":[],

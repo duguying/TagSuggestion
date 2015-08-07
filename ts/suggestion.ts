@@ -250,11 +250,16 @@ class TagSuggestion{
     }
 
     private fillIntoInput(content:string){
-        this.current_bind_element.value = content;
+
         for(var idx in this.bind_elements){
             if(this.bind_elements[idx]["element"] == this.current_bind_element){
                 if(this.bind_elements[idx]["callback"]){
-                    this.bind_elements[idx]["callback"]();
+                    var result:boolean = this.bind_elements[idx]["callback"]();
+                    if(typeof result == "undefined" || result){
+                        this.current_bind_element.value = content;
+                    }
+                }else{
+                    this.current_bind_element.value = content;
                 }
             };
         }
