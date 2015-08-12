@@ -7,9 +7,18 @@ TagSuggestion是“开源中国人才汇”简历部分用到的搜索建议(sug
 ```javascript
 var ele1 = document.getElementsByTagName("input")[0];
 var ele2 = document.getElementsByTagName("input")[1];
-var tag_sug = new TagSuggestion();
-tag_sug.addBindingElement(ele1);
-tag_sug.addBindingElement(ele2);
+var ele3 = document.getElementsByTagName("input")[2];
+
+TagSuggestion.ME.addBindingElement(ele1);
+TagSuggestion.ME.addBindingElement(ele2,function(ele){
+    // ele 为当前绑定的 input 元素
+});
+TagSuggestion.ME.addBindingElement(ele3,function(ele, true){
+    // ele 为当前绑定的 input 元素
+    // 若有第二个参数 true , 则当前回调函数返回 false 时, 可以截断数据对 input 的填充
+});
+
+TagSuggestion.ME.removeBindingElement(ele1);
 
 var new_data = {
     "编程语言":["php","golang","typescript"],

@@ -16,6 +16,7 @@ class TagSuggestion{
     private map:any = {};
     private current_bind_element:any;
     private bind_elements:any = [];
+    private callback_interrupt = false;
     public static ME:TagSuggestion = new TagSuggestion();
 
     /**
@@ -89,7 +90,10 @@ class TagSuggestion{
      * @param ele 绑定的input元素
      * @param callback 填充完毕后的回调函数
      */
-    public addBindingElement(ele:any, callback: any){
+    public addBindingElement(ele:any, callback: any, interrupt:boolean){
+        if(interrupt){
+            this.callback_interrupt = interrupt;
+        }
         this.bind_elements.push({"element":ele,"callback":callback});
         this.bindInputFocus(ele);
     }
@@ -250,13 +254,17 @@ class TagSuggestion{
     }
 
     private fillIntoInput(content:string){
-
         for(var idx in this.bind_elements){
             if(this.bind_elements[idx]["element"] == this.current_bind_element){
                 if(this.bind_elements[idx]["callback"]){
-                    var result:boolean = this.bind_elements[idx]["callback"]();
-                    if(typeof result == "undefined" || result){
+                    if(this.callback_interrupt){
+                        var result:boolean = this.bind_elements[idx]["callback"](this.current_bind_element);
+                        if(typeof result == "undefined" || result){
+                            this.current_bind_element.value = content;
+                        }
+                    }else{
                         this.current_bind_element.value = content;
+                        this.bind_elements[idx]["callback"](this.current_bind_element);
                     }
                 }else{
                     this.current_bind_element.value = content;
