@@ -1,6 +1,10 @@
 #TagSuggestion
 
-TagSuggestion是“开源中国人才汇”简历部分用到的搜索建议(suggestion)分类列表控件。
+TagSuggestion是“开源中国人才汇”简历部分用到的搜索建议(suggestion)分类列表控件，控件为单例模式，一次初始化页面到处使用。
+
+## 效果
+
+![demo](https://git.oschina.net/duguying2008/TagSuggestion/raw/master/show.gif?dir=0&filepath=show.gif)
 
 ## 使用
 
